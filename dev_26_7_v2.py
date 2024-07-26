@@ -167,7 +167,7 @@ def main():
                     st.subheader('2) Identifying unused tables')
                     left,right=st.columns((1,2))
                     with left:
-                        st.image(Image.open(r'D:\Kipithon\unused_tables.png').resize((400,500)))
+                        st.image(Image.open(r'unused_tables.png').resize((400,500)))
                     with right:
                         #step - 1
                         #st.write('##')
