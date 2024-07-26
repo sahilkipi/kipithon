@@ -1,4 +1,4 @@
-hydralit_components
+hydralit-components==1.0.10
 requests
 streamlit_lottie
 plotly
