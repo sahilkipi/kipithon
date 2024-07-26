@@ -3,4 +3,4 @@ requests
 streamlit_lottie
 plotly
 snowflake-snowpark-python
-numpy
+numpy==1.26.4
