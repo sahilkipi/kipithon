@@ -2,3 +2,4 @@ hydralit_components
 requests
 streamlit_lottie
 plotly
+snowflake-snowpark-python
