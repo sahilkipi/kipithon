@@ -3,3 +3,4 @@ requests
 streamlit_lottie
 plotly
 snowflake-snowpark-python
+numpy
