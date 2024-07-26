@@ -10,13 +10,13 @@ import plotly.graph_objects as go
 from PIL import Image
 
 connection_parameters = {
- "user": "Sahil",
- "password": "Kipithon@123",
- "account": "nf72675.ap-southeast-2",
- "role": "ACCOUNTADMIN",
- "warehouse": "COMPUTE_WH",
- "database": "SAHIL_DB",
- "schema": "PUBLIC",
+ "user": st.secrets['DB_USER'],
+ "password": st.secrets['DB_PASSWORD],
+ "account": st.secrets['DB_ACCOUNT'],
+ "role": st.secrets['DB_ROLE'],
+ "warehouse": st.secrets['DB_WAREHOUSE'],
+ "database": st.secrets['DB_NAME'],
+ "schema": st.secrets['DB_SCHEMA'],
  } 
 
 def lottie_url(url):
