@@ -41,7 +41,7 @@ def summary_report(engine):
 
         # database image
         with first_column:
-            image=Image.open('Dashboard_icons\database-blue.png')
+            image=Image.open('Dashboard_icons/database-blue.png')
             st.image(image, caption=None, width=100, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -53,7 +53,7 @@ def summary_report(engine):
 
         # used space image
         with thr_column:
-            image=Image.open('Dashboard_icons\pie-chart.png')
+            image=Image.open('Dashboard_icons/pie-chart.png')
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -65,7 +65,7 @@ def summary_report(engine):
 
         ##free space image
         with five_column:
-            image=Image.open('Dashboard_icons\pie-chart-2.png')
+            image=Image.open('Dashboard_icons/pie-chart-2.png')
             st.image(image,caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -93,7 +93,7 @@ def summary_report(engine):
 
         # table image
         with kpi1:
-            image=Image.open(r"Dashboard_icons\future_state_table.png")
+            image=Image.open(r"Dashboard_icons/future_state_table.png")
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -106,7 +106,7 @@ def summary_report(engine):
 
         # view image
         with kpi3:
-            image=Image.open(r'Dashboard_icons\visualization.png')
+            image=Image.open(r'Dashboard_icons/visualization.png')
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -118,7 +118,7 @@ def summary_report(engine):
 
         # procedure image
         with kpi5:
-            image=Image.open('Dashboard_icons\db_sp.png')
+            image=Image.open('Dashboard_icons/db_sp.png')
             st.image(image, caption=None, width=120, use_column_width=None, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -138,7 +138,7 @@ def summary_report(engine):
 
         # function image
         with kpi1:
-            image=Image.open(r'Dashboard_icons\fx.png')
+            image=Image.open(r'Dashboard_icons/fx.png')
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -150,7 +150,7 @@ def summary_report(engine):
 
         # sequence image
         with kpi3:
-            image=Image.open('Dashboard_icons\db_seq.png')
+            image=Image.open('Dashboard_icons/db_seq.png')
             st.image(image, caption=None, width=100, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -162,7 +162,7 @@ def summary_report(engine):
 
         # index image
         with kpi5:
-            image=Image.open(r'Dashboard_icons\future_state_idx.png')
+            image=Image.open(r'Dashboard_icons/future_state_idx.png')
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
