@@ -9,3 +9,4 @@ st-annotated-text==4.0.1
 st_card_component
 streamlit_option_menu
 tk
+turtle
