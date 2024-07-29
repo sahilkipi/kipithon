@@ -356,7 +356,7 @@ def main():
                     schema='REPORTING'
                 ))
             tabs = st.tabs(['Summary Report 📃', 'Volumetirc Analysis 📊 ', 'Performance Stats 📉','Temperature Analysis 🌡️','Future state 📈',])
-            with tab[0]:
+            with tabs[0]:
                 summary_report(engine)
 
         if st.button("Logout"):

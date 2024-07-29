@@ -28,10 +28,10 @@ def summary_report(engine):
     d = "DATABASE DETAILS"
     st.markdown(f"<h3 style='text-align: center; color: #efcb68;'>{d}</h3>", unsafe_allow_html=True)
     #st.markdown("<h3 style='text-align: center; color: white;'>" + str(annotated_text(('Database details','','#12343b'))) + "</h3>",unsafe_allow_html=True)
-    inv_df = pd.read_csv('Schema_object_overview.csv', header=True)
+    inv_df = pd.read_csv('Schema_object_overview.csv', header=1)
     ver = str("MySQL Standard Edition 8.0.38")
-    # Us = float(inv_df['Used_Space(MB)'])
-    # fs = float(inv_df["Free_Space(MB)"])
+    Us = '500'  #float(inv_df['Used_Space(MB)'])
+    fs = '700'  #float(inv_df["Free_Space(MB)"])
 
     st.write("##")
 
@@ -74,7 +74,7 @@ def summary_report(engine):
         with six_column:
             st.subheader("Free Space ")
             # st.subheader(f"{fs}")
-            # st.markdown(f"<h5 style='text-align: left; color: #C0DD81;'> MB: {fs}</h5>", unsafe_allow_html=True)
+            st.markdown(f"<h5 style='text-align: left; color: #C0DD81;'> MB: {fs}</h5>", unsafe_allow_html=True)
         st.write("---")
 
         # objects information
@@ -83,16 +83,18 @@ def summary_report(engine):
         st.write("###")
         kpi0, kpi1, kpi2, kpi3, kpi4, kpi5, kpi6 = st.columns((0.6, 0.6, 1.4, 0.6, 1.4, 0.6, 1.4))
 
-        inv_df_obj = pd.read_sql("select * from QUERY_HISTORY_RESULTS_STG",engine)
+        inv_df_obj = pd.read_sql("select * from db_object_overview",engine)
+
+        # st.dataframe(inv_df_obj)
         #st.write(inv_df_obj.columns)
         # storing count
-        inv_df_tbc = inv_df_obj.loc[inv_df_obj['object_type'] == 'TABLE', 'object_count'].sum()
-        inv_df_v = inv_df_obj.loc[inv_df_obj['object_type'] == 'VIEW', 'object_count'].sum()
-        inv_df_p = inv_df_obj.loc[inv_df_obj['object_type'] == 'PROCEDURE', 'object_count'].sum()
+        inv_df_tbc = inv_df_obj.loc[inv_df_obj['object_type'] == 'BASE TABLE', 'count'].sum()
+        inv_df_v = inv_df_obj.loc[inv_df_obj['object_type'] == 'VIEW', 'count'].sum()
+        inv_df_p = inv_df_obj.loc[inv_df_obj['object_type'] == 'PROCEDURE', 'count'].sum()
 
         # table image
         with kpi1:
-            image=Image.open('Dashboard_icons\future_state_table.png')
+            image=Image.open(r"Dashboard_icons\future_state_table.png")
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -101,11 +103,11 @@ def summary_report(engine):
             # hc.info_card(title='Total Table Count ⬇', content=a, bar_value=12)
             st.subheader("Tables ")
             # st.subheader(f"{inv_df_tbc}")
-            st.markdown(f"<h5 style='text-align: left; color: #FFF89C;'> Count: {inv_df_tbc}</h5>", unsafe_allow_html=True)
+            st.markdown(f"<h5 style='text-align: left; color: #87CEEB;'> Count: {inv_df_tbc}</h5>", unsafe_allow_html=True)
 
         # view image
         with kpi3:
-            image=Image.open('Dashboard_icons\visualization.png')
+            image=Image.open(r'Dashboard_icons\visualization.png')
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -113,7 +115,7 @@ def summary_report(engine):
         with kpi4:
             st.subheader("Views ")
             # st.subheader(f"{inv_df_v}")
-            st.markdown(f"<h5 style='text-align: left; color: #FFF89C;'> Count: {inv_df_v}</h5>", unsafe_allow_html=True)
+            st.markdown(f"<h5 style='text-align: left; color: #87CEEB;'> Count: {inv_df_v}</h5>", unsafe_allow_html=True)
 
         # procedure image
         with kpi5:
@@ -125,19 +127,19 @@ def summary_report(engine):
         with kpi6:
             st.subheader("Procedures ")
             # st.subheader(f"{inv_df_p}")
-            st.markdown(f"<h5 style='text-align: left; color: #FFF89C;'> Count: {inv_df_p}</h5>", unsafe_allow_html=True)
+            st.markdown(f"<h5 style='text-align: left; color: #87CEEB;'> Count: {inv_df_p}</h5>", unsafe_allow_html=True)
 
         st.write('##')
 
         kpi0, kpi1, kpi2, kpi3, kpi4, kpi5, kpi6 = st.columns((0.6, 0.6, 1.4, 0.6, 1.4, 0.6, 1.4))
         # storing count
-        inv_df_f = inv_df_obj.loc[inv_df_obj['object_type'] == 'FUNCTION', 'object_count'].sum()
-        inv_df_s = inv_df_obj.loc[inv_df_obj['object_type'] == 'SEQUENCE', 'object_count'].sum()
-        inv_df_i = inv_df_obj.loc[inv_df_obj['object_type'] == 'INDEX', 'object_count'].sum()
+        inv_df_f = inv_df_obj.loc[inv_df_obj['object_type'] == 'FUNCTION', 'count'].sum()
+        inv_df_s = inv_df_obj.loc[inv_df_obj['object_type'] == 'SEQUENCE', 'count'].sum()
+        inv_df_i = inv_df_obj.loc[inv_df_obj['object_type'] == 'INDEX', 'count'].sum()
 
         # function image
         with kpi1:
-            image=Image.open('Dashboard_icons\fx.png')
+            image=Image.open(r'Dashboard_icons\fx.png')
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -145,7 +147,7 @@ def summary_report(engine):
         with kpi2:
             st.subheader("Fuctions ")
             # st.subheader(f"{inv_df_f}")
-            st.markdown(f"<h5 style='text-align: left; color: #FFF89C;'> Count: {inv_df_f}</h5>", unsafe_allow_html=True)
+            st.markdown(f"<h5 style='text-align: left; color: #87CEEB;'> Count: {inv_df_f}</h5>", unsafe_allow_html=True)
 
         # sequence image
         with kpi3:
@@ -157,11 +159,11 @@ def summary_report(engine):
         with kpi4:
             st.subheader("Sequences ")
             # st.subheader(f"{inv_df_s}")
-            st.markdown(f"<h5 style='text-align: left; color: #FFF89C;'> Count: {inv_df_s}</h5>", unsafe_allow_html=True)
+            st.markdown(f"<h5 style='text-align: left; color: #87CEEB;'> Count: {inv_df_s}</h5>", unsafe_allow_html=True)
 
         # index image
         with kpi5:
-            image=Image.open('Dashboard_icons\future_state_idx.png')
+            image=Image.open(r'Dashboard_icons\future_state_idx.png')
             st.image(image, caption=None, width=120, use_column_width=True, clamp=False, channels="RGB",
                      output_format="auto")
 
@@ -169,7 +171,7 @@ def summary_report(engine):
         with kpi6:
             st.subheader("Indexes ")
             # st.subheader(f"{inv_df_i}")
-            st.markdown(f"<h5 style='text-align: left; color: #FFF89C;'>Count: {inv_df_i}</h5>", unsafe_allow_html=True)
+            st.markdown(f"<h5 style='text-align: left; color: #87CEEB;'>Count: {inv_df_i}</h5>", unsafe_allow_html=True)
 
 
 #summary()
