@@ -12,7 +12,6 @@ import time
 from Reports.Summary_Report import summary_report
 from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
-from tkinter import *
 
 connection_parameters = {
  "user": st.secrets['DB_USER'],
