@@ -8,6 +8,10 @@ from streamlit_lottie import st_lottie
 import pandas as pd
 import plotly.graph_objects as go
 from PIL import Image
+import time
+from Reports.Summary_Report import summary_report
+from sqlalchemy import create_engine
+from snowflake.sqlalchemy import URL
 
 connection_parameters = {
  "user": st.secrets['DB_USER'],
@@ -91,13 +95,16 @@ def main():
         
 
     if st.session_state.logged_in:
+        with hc.HyLoader('Loading Application...',hc.Loaders.standard_loaders,index=5):
+            time.sleep(5)
+
+        time.sleep(5)
         menu_data = [
                 {'icon': "bi bi-house-fill", 'label': "Home"},
                 {'icon': "far fa-chart-bar", 'label': "Analysis"},
                 {'icon': "bi bi-journals", 'label': "Services"}
             ]
-        over_theme = {'txc_inactive': '#FFFFFF', 'menu_background': '#12343b', 'txc_active': 'black',
-                          'option_active': '#1dbab4'}
+        over_theme = {'txc_inactive': '#FFFFFF'}
         menu_id = hc.option_bar(option_definition=menu_data,override_theme=over_theme,horizontal_orientation=True)
 
         if menu_id == 'Home':
@@ -336,6 +343,21 @@ def main():
                 #         st.markdown(f"<h4 style='text-align: right; color: white;'>{address}</h4>",unsafe_allow_html=True)
                 #         state='Karnataka, India'
                 #         st.markdown(f"<h4 style='text-align: right; color: white;'>{state}</h4>",unsafe_allow_html=True)
+
+        if menu_id=="Analysis":
+            engine = create_engine(URL(
+                    user=st.secrets['DB_USER'],
+                    account=st.secrets['DB_ACCOUNT'],
+                    # region=config.region,
+                    role=st.secrets['DB_ROLE'],
+                    password=st.secrets['DB_PASSWORD'],
+                    warehouse=st.secrets['DB_WAREHOUSE'],
+                    database='SAMPLE_DB',
+                    schema='REPORTING'
+                ))
+            tabs = st.tabs(['Summary Report 📃', 'Volumetirc Analysis 📊 ', 'Performance Stats 📉','Temperature Analysis 🌡️','Future state 📈',])
+            with tab[0]:
+                summary_report(engine)
 
         if st.button("Logout"):
             st.session_state.logged_in = False
