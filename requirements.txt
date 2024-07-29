@@ -7,3 +7,4 @@ numpy==1.26.4
 streamlit-card
 st-annotated-text==4.0.1
 st_card_component
+streamlit_option_menu
