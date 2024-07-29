@@ -362,7 +362,7 @@ def main():
         if st.button("Logout"):
             st.session_state.logged_in = False
             st.session_state.username = ""
-            st.experimental_rerun()
+            st.rerun()
     else:
         menu = ["Login", "Sign Up", "Forgot Username", "Forgot Password"]
         choice = st.sidebar.selectbox("Menu", menu)
@@ -380,7 +380,7 @@ def main():
                         if username in credentials and credentials[username]["password"] == hash_password(password):
                             st.session_state.logged_in = True
                             st.session_state.username = username
-                            st.experimental_rerun()
+                            st.rerun()
                         else:
                             st.warning("Incorrect Username/Password")
                     else:
@@ -458,7 +458,7 @@ def main():
                         if username and email:
                             if username in credentials and credentials[username]["email"] == email:
                                 st.session_state.reset_user = username
-                                st.experimental_rerun()
+                                st.rerun()
                             else:
                                 st.warning("Incorrect Username/Email")
                         else:
