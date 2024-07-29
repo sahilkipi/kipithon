@@ -10,6 +10,7 @@ import numpy as np
 from PIL import Image
 import plotly.graph_objects as go
 from annotated_text import annotated_text
+from tkinter import *
 
 '''
 st.set_page_config(
