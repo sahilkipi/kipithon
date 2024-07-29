@@ -5,12 +5,10 @@ import plotly.express as px
 from turtle import home
 import pandas as pd
 import st_card_component as sc
-import config
 import numpy as np
 from PIL import Image
 import plotly.graph_objects as go
 from annotated_text import annotated_text
-from tkinter import *
 
 '''
 st.set_page_config(
