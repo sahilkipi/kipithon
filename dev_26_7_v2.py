@@ -8,6 +8,7 @@ from streamlit_lottie import st_lottie
 import pandas as pd
 import plotly.graph_objects as go
 from PIL import Image
+import time
 
 connection_parameters = {
  "user": st.secrets['DB_USER'],
@@ -91,13 +92,16 @@ def main():
         
 
     if st.session_state.logged_in:
+        with hc.HyLoader('Loading Application...',hc.Loaders.standard_loaders,index=5):
+            time.sleep(5)
+
+        time.sleep(5)
         menu_data = [
                 {'icon': "bi bi-house-fill", 'label': "Home"},
                 {'icon': "far fa-chart-bar", 'label': "Analysis"},
                 {'icon': "bi bi-journals", 'label': "Services"}
             ]
-        over_theme = {'txc_inactive': '#FFFFFF', 'menu_background': '#12343b', 'txc_active': 'black',
-                          'option_active': '#1dbab4'}
+        over_theme = {'txc_inactive': '#FFFFFF'}
         menu_id = hc.option_bar(option_definition=menu_data,override_theme=over_theme,horizontal_orientation=True)
 
         if menu_id == 'Home':
