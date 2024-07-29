@@ -10,3 +10,4 @@ st_card_component
 streamlit_option_menu
 tk
 PythonTurtle
+SQLAlchemy
