@@ -12,6 +12,8 @@ import time
 from Reports.Summary_Report import summary_report
 from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
+from email.message import EmailMessage
+import smtplib
 
 connection_parameters = {
  "user": st.secrets['DB_USER'],
@@ -304,45 +306,45 @@ def main():
                 st.write('---')
 
                 #Feedback form
-                # with st.container():
-                #     def email_alert(subject, body, to):
-                #         msg = EmailMessage()
-                #         msg.set_content(body)
-                #         msg['subject'] = subject
-                #         msg['to'] = to
+                with st.container():
+                    def email_alert(subject, body, to):
+                        msg = EmailMessage()
+                        msg.set_content(body)
+                        msg['subject'] = subject
+                        msg['to'] = to
 
-                #         user = config.email_id
-                #         password = config.email_passwd
-                #         msg['from'] = user
+                        user = st.secrets['EMAIL_USER']
+                        password = st.secrets['EMAIL_PWD']
+                        msg['from'] = user
 
-                #         server = smtplib.SMTP('smtp.gmail.com', 587)
-                #         server.starttls()
-                #         server.login(user, password)
-                #         server.send_message(msg)
-                #         server.quit()
+                        server = smtplib.SMTP('smtp.gmail.com', 587)
+                        server.starttls()
+                        server.login(user, password)
+                        server.send_message(msg)
+                        server.quit()
 
-                #     left, right = st.columns(2)
-                #     with left:
-                #         st.subheader('Pre-Migration Assistant 🤖')
+                    left, right = st.columns(2)
+                    with left:
+                        st.subheader('Pre-Migration Assistant 🤖')
 
-                #     left,middle,right = st.columns((1.5,0.4,0.8))
-                #     with left:
-                #         with st.form('Feedback form',clear_on_submit=True):
-                #             first_name=st.text_input('Enter your first name')
-                #             last_name=st.text_input('Enter your last name')
-                #             company = st.text_input('Enter your company')
-                #             question=st.text_input('Enter your question')
+                    left,middle,right = st.columns((1.5,0.4,0.8))
+                    with left:
+                        with st.form('Feedback form',clear_on_submit=True):
+                            first_name=st.text_input('Enter your first name')
+                            last_name=st.text_input('Enter your last name')
+                            company = st.text_input('Enter your company')
+                            question=st.text_input('Enter your question')
 
-                #             if st.form_submit_button('submit') and first_name and last_name and company and question:
-                #                 email_alert('Query',question,'maseed.m.ilyas@kipi.bi')
-                #     with right:
-                #         st.image(Image.open('logo4.png'),use_column_width=True)
-                #         ph_no='0863-198-3764'
-                #         st.markdown(f"<h4 style='text-align: right; color: white;'>{ph_no}</h4>", unsafe_allow_html=True)
-                #         address='IT-Hub, Bangalore - 577501'
-                #         st.markdown(f"<h4 style='text-align: right; color: white;'>{address}</h4>",unsafe_allow_html=True)
-                #         state='Karnataka, India'
-                #         st.markdown(f"<h4 style='text-align: right; color: white;'>{state}</h4>",unsafe_allow_html=True)
+                            if st.form_submit_button('submit') and first_name and last_name and company and question:
+                                email_alert('Query',question,'sahil.h.kumar @kipi.bi')
+                    with right:
+                        st.image(Image.open('logo4.png'),use_column_width=True)
+                        ph_no='0863-198-3764'
+                        st.markdown(f"<h4 style='text-align: right; color: white;'>{ph_no}</h4>", unsafe_allow_html=True)
+                        address='IT-Hub, Bangalore - 577501'
+                        st.markdown(f"<h4 style='text-align: right; color: white;'>{address}</h4>",unsafe_allow_html=True)
+                        state='Karnataka, India'
+                        st.markdown(f"<h4 style='text-align: right; color: white;'>{state}</h4>",unsafe_allow_html=True)
 
         if menu_id=="Analysis":
             engine = create_engine(URL(
