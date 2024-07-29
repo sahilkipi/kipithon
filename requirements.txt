@@ -4,3 +4,11 @@ streamlit_lottie
 plotly
 snowflake-snowpark-python
 numpy==1.26.4
+streamlit-card
+st-annotated-text==4.0.1
+st_card_component
+streamlit_option_menu
+tk
+PythonTurtle
+SQLAlchemy
+snowflake-sqlalchemy
