@@ -12,3 +12,4 @@ tk
 PythonTurtle
 SQLAlchemy
 snowflake-sqlalchemy
+emails

@@ -12,6 +12,8 @@ import time
 from Reports.Summary_Report import summary_report
 from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
+from email.message import EmailMessage
+import smtplib
 
 connection_parameters = {
  "user": st.secrets['DB_USER'],
@@ -102,7 +104,8 @@ def main():
         menu_data = [
                 {'icon': "bi bi-house-fill", 'label': "Home"},
                 {'icon': "far fa-chart-bar", 'label': "Analysis"},
-                {'icon': "bi bi-journals", 'label': "Services"}
+                {'icon': "bi bi-journals", 'label': "Services"},
+                {'icon': "email", 'label':"Feedback Form"}
             ]
         over_theme = {'txc_inactive': '#FFFFFF'}
         menu_id = hc.option_bar(option_definition=menu_data,override_theme=over_theme,horizontal_orientation=True)
@@ -303,46 +306,49 @@ def main():
 
                 st.write('---')
 
-                #Feedback form
-                # with st.container():
-                #     def email_alert(subject, body, to):
-                #         msg = EmailMessage()
-                #         msg.set_content(body)
-                #         msg['subject'] = subject
-                #         msg['to'] = to
+        if menu_id=="Feedback Form":
+            #Feedback form
+            with st.container():
+                def email_alert(subject, body, recipient):
+                    msg = EmailMessage()
+                    msg.set_content(body)
+                    msg['subject'] = subject
+                    msg['to'] = recipient
 
-                #         user = config.email_id
-                #         password = config.email_passwd
-                #         msg['from'] = user
+                    user = st.secrets['EMAIL_USER']
+                    password = st.secrets['EMAIL_PWD']
+                    msg['from'] = user
 
-                #         server = smtplib.SMTP('smtp.gmail.com', 587)
-                #         server.starttls()
-                #         server.login(user, password)
-                #         server.send_message(msg)
-                #         server.quit()
+                    server = smtplib.SMTP('smtp.mailersend.net', 587)
+                    server.starttls()
+                    server.login(user, password)
+                    server.send_message(msg)
+                    server.quit()
 
-                #     left, right = st.columns(2)
-                #     with left:
-                #         st.subheader('Pre-Migration Assistant 🤖')
+                left, right = st.columns(2)
+                with left:
+                    st.subheader('Pre-Migration Assistant 🤖')
 
-                #     left,middle,right = st.columns((1.5,0.4,0.8))
-                #     with left:
-                #         with st.form('Feedback form',clear_on_submit=True):
-                #             first_name=st.text_input('Enter your first name')
-                #             last_name=st.text_input('Enter your last name')
-                #             company = st.text_input('Enter your company')
-                #             question=st.text_input('Enter your question')
+                left,middle,right = st.columns((1.5,0.4,0.8))   
+                with left:
+                    with st.form('Feedback form',clear_on_submit=True):
+                        first_name=st.text_input('Enter your first name')
+                        last_name=st.text_input('Enter your last name')
+                        company = st.text_input('Enter your company')
+                        question=st.text_input('Enter your question')
+                        
+                        subject = 'Query from '+first_name+' '+last_name+' ('+company+')'
 
-                #             if st.form_submit_button('submit') and first_name and last_name and company and question:
-                #                 email_alert('Query',question,'maseed.m.ilyas@kipi.bi')
-                #     with right:
-                #         st.image(Image.open('logo4.png'),use_column_width=True)
-                #         ph_no='0863-198-3764'
-                #         st.markdown(f"<h4 style='text-align: right; color: white;'>{ph_no}</h4>", unsafe_allow_html=True)
-                #         address='IT-Hub, Bangalore - 577501'
-                #         st.markdown(f"<h4 style='text-align: right; color: white;'>{address}</h4>",unsafe_allow_html=True)
-                #         state='Karnataka, India'
-                #         st.markdown(f"<h4 style='text-align: right; color: white;'>{state}</h4>",unsafe_allow_html=True)
+                        if st.form_submit_button('submit') and first_name and last_name and company and question:
+                            email_alert(subject,question,'sahil.h.kumar@kipi.bi')
+                with right:
+                    st.image(Image.open('logo4.PNG'),use_column_width=True)
+                    ph_no='0863-198-3764'
+                    st.markdown(f"<h4 style='text-align: right; color: white;'>{ph_no}</h4>", unsafe_allow_html=True)
+                    address='IT-Hub, Bangalore - 577501'
+                    st.markdown(f"<h4 style='text-align: right; color: white;'>{address}</h4>",unsafe_allow_html=True)
+                    state='Karnataka, India'
+                    st.markdown(f"<h4 style='text-align: right; color: white;'>{state}</h4>",unsafe_allow_html=True)
 
         if menu_id=="Analysis":
             engine = create_engine(URL(
@@ -362,7 +368,7 @@ def main():
         if st.button("Logout"):
             st.session_state.logged_in = False
             st.session_state.username = ""
-            st.experimental_rerun()
+            st.rerun()
     else:
         menu = ["Login", "Sign Up", "Forgot Username", "Forgot Password"]
         choice = st.sidebar.selectbox("Menu", menu)
@@ -380,7 +386,7 @@ def main():
                         if username in credentials and credentials[username]["password"] == hash_password(password):
                             st.session_state.logged_in = True
                             st.session_state.username = username
-                            st.experimental_rerun()
+                            st.rerun()
                         else:
                             st.warning("Incorrect Username/Password")
                     else:
@@ -458,7 +464,7 @@ def main():
                         if username and email:
                             if username in credentials and credentials[username]["email"] == email:
                                 st.session_state.reset_user = username
-                                st.experimental_rerun()
+                                st.rerun()
                             else:
                                 st.warning("Incorrect Username/Email")
                         else:
