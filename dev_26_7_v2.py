@@ -342,7 +342,7 @@ def main():
                         if st.form_submit_button('submit') and first_name and last_name and company and question:
                             email_alert(subject,question,'sahil.h.kumar@kipi.bi')
                 with right:
-                    st.image(Image.open('logo4.png'),use_column_width=True)
+                    st.image(Image.open('logo4.PNG'),use_column_width=True)
                     ph_no='0863-198-3764'
                     st.markdown(f"<h4 style='text-align: right; color: white;'>{ph_no}</h4>", unsafe_allow_html=True)
                     address='IT-Hub, Bangalore - 577501'
