@@ -13,3 +13,4 @@ PythonTurtle
 SQLAlchemy
 snowflake-sqlalchemy
 emails
+streamlit==1.33.0
