@@ -10,6 +10,7 @@ import plotly.graph_objects as go
 from PIL import Image
 import time
 from Reports.Summary_Report import summary_report
+from Reports.Temperature_Analysis import temperature_analysis
 from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
 from email.message import EmailMessage
@@ -364,6 +365,14 @@ def main():
             tabs = st.tabs(['Summary Report 📃', 'Volumetirc Analysis 📊 ', 'Performance Stats 📉','Temperature Analysis 🌡️','Future state 📈',])
             with tabs[0]:
                 summary_report(engine)
+            with tabs[1]:
+                st.info("WIP")
+            with tabs[2]:
+                st.info("WIP")
+            with tabs[3]:
+                temperature_analysis(engine)
+            with tabs[4]:
+                st.info("WIP")
 
         if st.button("Logout"):
             st.session_state.logged_in = False
