@@ -11,6 +11,7 @@ from PIL import Image
 import time
 from Reports.Summary_Report import summary_report
 from Reports.Temperature_Analysis import temperature_analysis
+from Reports.Volumetric_Analysis import volumetric_analysis
 from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
 from email.message import EmailMessage
@@ -366,7 +367,7 @@ def main():
             with tabs[0]:
                 summary_report(engine)
             with tabs[1]:
-                st.info("WIP")
+                volumetric_analysis(engine)
             with tabs[2]:
                 st.info("WIP")
             with tabs[3]:
