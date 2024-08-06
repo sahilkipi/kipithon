@@ -47,7 +47,7 @@ def execute_query_and_upload(query, task_folder_name):
     column_names = [i[0] for i in mycursor.description]
 
     # Define the local CSV file path
-    local_csv_file_path = f"C:/Users/RushikeshDighe/Desktop/KIPITHON/{task_folder_name}/{year}_{month}_{day}.csv"
+    local_csv_file_path = f"C:/Users/RushikeshDighe/Desktop/KIPITHON/Backups And Overviews/{task_folder_name}/{year}_{month}_{day}.csv"
 
     # Output results to a local CSV file
     try:
@@ -83,17 +83,45 @@ where db not in ('sys','information_schema','performance_schema','mysql');
 """
 
 query_history_query = """
-SELECT query, db AS db_name, full_scan, exec_count, err_count, total_latency, max_latency, avg_latency, rows_sent, rows_examined, rows_affected, max_total_memory, first_seen, last_seen
+SELECT query, db AS db_name, full_scan, exec_count, err_count, total_latency, max_latency, avg_latency, rows_sent, rows_examined, rows_affected, max_total_memory, 
+first_seen, last_seen,current_timestamp() as ingest_tmst
 FROM sys.x$statement_analysis
 WHERE db IS NOT NULL AND db NOT IN ('information_schema', 'sys')
 AND (query LIKE 'SELECT%' OR query LIKE 'INSERT%' OR query LIKE 'UPDATE%' OR query LIKE 'DELETE%')
 ORDER BY last_seen DESC;
 """
 
+schema_memory_datails = """ 
+SELECT TABLE_SCHEMA, TABLE_NAME,TABLE_TYPE,
+Data_length,index_length FROM information_schema.tables
+WHERE TABLE_SCHEMA NOT IN ('information_schema', 'sys','performance_schema', 'mysql');
+"""
+
+schema_performance_stats = """
+SELECT statements, statement_latency, table_scans, total_connections, current_memory, total_memory_allocated,
+current_date() as ingest_date
+FROM sys.host_summary;
+"""
+
+views_dependencies_info ="""
+SELECT  views.TABLE_NAME As VIEW, tab.TABLE_SCHEMA as DB_NAME, tab.TABLE_NAME AS PARENT
+FROM information_schema.TABLES AS tab 
+INNER JOIN information_schema.VIEWS AS views 
+ON views.VIEW_DEFINITION LIKE CONCAT('%`',tab.TABLE_NAME,'`%') and
+tab.TABLE_SCHEMA = views.table_schema
+WHERE tab.table_schema not in ('sys','information_schema','performance_schema','mysql')
+and views.table_schema not in ('sys','information_schema','performance_schema','mysql') ;
+"""
+
+
 # Task folder names and queries
 task_folders = [
     ("DB_OBJECT_OVERVIEW", object_overview_query),
-    ("query_history_backup", query_history_query)
+    ("Query_History_Backup", query_history_query),
+    ("Schema_memory_datails",schema_memory_datails),
+    ("Schema_performance_stats", schema_performance_stats),
+    ("Views_dependencies_info",views_dependencies_info)
+
 ]
 
 # Execute queries and upload
