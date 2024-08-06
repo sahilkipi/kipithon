@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-import hydralit_components as hc
+# import hydralit_components as hc
 import plotly.express as px
 from turtle import home
 import pandas as pd

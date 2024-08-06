@@ -182,6 +182,5 @@ def temperature_analysis(engine):
                 ])
                 fig.update_layout(title_x=0, margin=dict(l=0, r=0, b=0, t=30), width=220, height=700, title="")
                 st.plotly_chart(fig, use_container_width=True)
-
-
+                
 #temperature()
