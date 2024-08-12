@@ -3,9 +3,30 @@ from google.cloud import storage
 import mysql.connector
 import csv
 import datetime
+import json
+from google.cloud import secretmanager
 
 # Set the environment variable for authentication
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/RushikeshDighe/Desktop/KIPITHON/GCP_SETUP/spiritual-craft-430907-a0-29f36d97a2c5.json"
+
+# GCP project and secret details
+project_id = "spiritual-craft-430907-a0"  # Replace with your GCP project ID
+secret_id = "kipithon-key"  # Replace with your secret ID
+
+# Function to access the secret from GCP Secret Manager
+def access_secret_version(project_id, secret_id,version_id=1):
+    client = secretmanager.SecretManagerServiceClient()
+    name = f"projects/{project_id}/secrets/{secret_id}/versions/{version_id}"
+    response = client.access_secret_version(request={"name": name})
+    payload = response.payload.data.decode("UTF-8")
+    return payload
+
+# Access the secret (JSON key)
+json_key = access_secret_version(project_id, secret_id,1)
+json_key_dict = json.loads(json_key)
+
+# Authenticate with the JSON key
+storage_client = storage.Client.from_service_account_info(json_key_dict)
 
 # Get the current date
 now = datetime.datetime.now()
