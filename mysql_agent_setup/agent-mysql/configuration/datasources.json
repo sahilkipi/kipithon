@@ -1,0 +1,8 @@
+{
+  "ADV2014": {
+    "url": "jdbc:mariadb://host.docker.internal:3306/?allowPublicKeyRetrieval=true&useSSL=false",
+    "username": "docker_user",
+    "password": "root",
+    "ssl": false
+  }
+}

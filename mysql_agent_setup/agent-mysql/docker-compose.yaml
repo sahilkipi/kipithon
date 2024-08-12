@@ -1,0 +1,13 @@
+version: '1'
+services:
+  mysql-agent:
+    container_name: mysql-agent
+    image: snowflakedb/database-connector-agent:latest
+    volumes:
+      - ./agent-keys:/home/agent/.ssh
+      - ./configuration/snowflake.json:/home/agent/snowflake.json
+      - ./configuration/datasources.json:/home/agent/datasources.json
+      - ./configuration/mariadb-java-client-3.3.2.jar:/home/agent/libs/mariadb-java-client-3.3.2.jar
+    env_file:
+      - configuration/mysql.conf
+    mem_limit: 6g
